@@ -20,7 +20,7 @@ export default function SignupPage() {
 
         setDisable(true);
 
-        const URL = ""; //inserir url
+        const URL = "http://localhost:4000/signup"; //inserir url
 
         const body = {
             email: emailSignup,
@@ -39,8 +39,8 @@ export default function SignupPage() {
         })
 
         promise.catch((err) => {
-            console.log("err signup", err);
-            alert(err);
+            console.log("err signup", err.response.data);
+            alert(err.response.data);
             setDisable(false);
         })
     }

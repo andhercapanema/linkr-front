@@ -17,7 +17,7 @@ export default function SigninPage() {
 
         setDisable(true);
 
-        const URL = ""; //inserir url
+        const URL = "http://localhost:4000/signin"; //inserir url
 
         const body = {
             email: emailSignin,
@@ -30,12 +30,12 @@ export default function SigninPage() {
 
         promise.then((res) => {
             //setToken(res.data.token);
-            navigate("/");
+            navigate("/timeline");
         })
 
         promise.catch((err) => {
-            console.log("err signin", err);
-            alert(err);
+            console.log("err signin", err.response.data);
+            alert(err.response.data);
             setDisable(false);
         })
     }
@@ -206,4 +206,3 @@ const Siginup = styled.div`
         font-weight: 400;
     }
 `
-
