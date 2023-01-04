@@ -135,6 +135,9 @@ const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
     }
+    a{
+        color: #FFFFFF;
+    }
 `;
 
 export default GlobalStyle;

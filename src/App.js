@@ -1,7 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./assets/styles/GlobalStyle";
-import Contexts from "./common/contexts/Contexts";
+import SiginPage from "./pages/Authentication&Logout/SigninPage";
 import TimelinePage from "./pages/TimelinePage/TimelinePage";
+import Contexts from "./common/contexts/Contexts";
 
 function App() {
     return (
@@ -9,6 +10,7 @@ function App() {
             <GlobalStyle />
             <Contexts>
                 <Routes>
+                    <Route path="/" element={<SiginPage />}></Route>
                     <Route path="/timeline" element={<TimelinePage />} />
                 </Routes>
             </Contexts>
