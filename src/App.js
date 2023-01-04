@@ -1,12 +1,14 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./assets/styles/GlobalStyle";
-import Contexts from "./common/contexts/Contexts";
+import SiginPage from "./pages/Authentication&Logout/SigninPage";
 
 function App() {
     return (
         <BrowserRouter>
             <GlobalStyle />
-            <Contexts>Linkr</Contexts>
+            <Routes>
+                    <Route path="/" element={<SiginPage />}></Route>
+            </Routes>
         </BrowserRouter>
     );
 }
