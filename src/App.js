@@ -2,15 +2,20 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import SigninPage from "./pages/Authentication&Logout/SigninPage";
 import SignupPage from "./pages/Authentication&Logout/SignupPage";
+import TimelinePage from "./pages/TimelinePage/TimelinePage";
+import Contexts from "./common/contexts/Contexts";
 
 function App() {
     return (
         <BrowserRouter>
             <GlobalStyle />
-            <Routes>
-                    <Route path="/" element={<SigninPage />}></Route>
+            <Contexts>
+                <Routes>
+                    <Route path="/" element={<SiginPage />}></Route>
+                    <Route path="/timeline" element={<TimelinePage />} />
                     <Route path="signup" element={<SignupPage />}></Route>
-            </Routes>
+                </Routes>
+            </Contexts>
         </BrowserRouter>
     );
 }
