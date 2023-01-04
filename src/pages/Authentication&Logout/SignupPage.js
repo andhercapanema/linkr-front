@@ -3,16 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 
-export default function SigninPage() {
+export default function SignupPage() {
 
-    const [emailSignin, setEmailSignin] = useState("");
-    const [passwordSigin, setPasswordSigin] = useState("");
+    const [emailSignup, setEmailSignup] = useState("");
+    const [passwordSignup, setPasswordSignup] = useState("");
+    const [usernameSignup, setUsernameSignup] = useState("");
+    const [pictureSignup, setPictureSignup] = useState("");
+    
     const [disable, setDisable] = useState(false);
     const navigate = useNavigate();
 
     //const { setToken } = useContext(AuthContext);
 
-    function login(e) {
+    function cadastre(e) {
         e.preventDefault();
 
         setDisable(true);
@@ -20,11 +23,13 @@ export default function SigninPage() {
         const URL = ""; //inserir url
 
         const body = {
-            email: emailSignin,
-            password: passwordSigin
+            email: emailSignup,
+            password: passwordSignup,
+            username: usernameSignup,
+            picture: pictureSignup
         }
 
-        console.log("bodySignin", body);
+        console.log("bodySignup", body);
 
         const promise = axios.post(URL, body);
 
@@ -34,7 +39,7 @@ export default function SigninPage() {
         })
 
         promise.catch((err) => {
-            console.log("err signin", err);
+            console.log("err signup", err);
             alert(err);
             setDisable(false);
         })
@@ -50,14 +55,14 @@ export default function SigninPage() {
             </Left>
 
             <Right>
-                <form onSubmit={login}>
+                <form onSubmit={cadastre}>
 
                     <Input>
                         <input
                             type="email"
                             placeholder="  e-mail"
-                            onChange={(e) => setEmailSignin(e.target.value)}
-                            value={emailSignin}
+                            onChange={(e) => setEmailSignup(e.target.value)}
+                            value={emailSignup}
                             required
                             disabled={disable}
                         />
@@ -67,27 +72,49 @@ export default function SigninPage() {
                         <input
                             type="password"
                             placeholder="  password"
-                            onChange={(e) => setPasswordSigin(e.target.value)}
-                            value={passwordSigin}
+                            onChange={(e) => setPasswordSignup(e.target.value)}
+                            value={passwordSignup}
                             required
                             disabled={disable}
                         />
                     </Input>
+
+                    <Input>
+                    <input
+                        type="text"
+                        placeholder="  username"
+                        onChange={(e) => setUsernameSignup(e.target.value)}
+                        value={usernameSignup}
+                        required
+                        disabled={disable}
+                    />
+                </Input>
+
+                <Input>
+                    <input
+                        type="text"
+                        placeholder="  picture url"
+                        onChange={(e) => setPictureSignup(e.target.value)}
+                        value={pictureSignup}
+                        required
+                        disabled={disable}
+                    />
+                </Input>
 
                     <Button>
                         <button
                             type="submit"
                             disabled={disable}
                         >
-                            <h1>Log In</h1>
+                            <h1>Sign Up</h1>
                         </button>
                     </Button>
 
                 </form>
 
                 <Siginup>
-                    <Link to="/signup">
-                        <h1>First time? Create an account!</h1>
+                    <Link to="/">
+                        <h1>Switch back to log in</h1>
                     </Link>
                 </Siginup>
 
