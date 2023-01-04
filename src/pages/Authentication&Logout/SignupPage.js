@@ -126,6 +126,9 @@ export default function SignupPage() {
 
 const All = styled.div`
    display: flex;
+   @media (max-width: 700px) {
+        flex-direction: column;
+    }
 `
 
 const Left = styled.div`
@@ -156,6 +159,10 @@ const Left = styled.div`
         width: 70%;
         margin-left: 10%;
     }
+    @media (max-width: 700px) {
+        width: 100%;
+        height: 30vh;
+    }
 `
 
 const Right = styled.div`
@@ -165,6 +172,12 @@ const Right = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    @media (max-width: 700px) {
+        width: 100%;
+        height: 70vh;
+        justify-content: flex-start;
+        padding-top: 40px;
+    }
 `
 
 const Input = styled.div`
