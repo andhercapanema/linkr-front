@@ -11,9 +11,9 @@ function App() {
             <GlobalStyle />
             <Contexts>
                 <Routes>
-                    <Route path="/" element={<SiginPage />}></Route>
+                    <Route path="/" element={<SigninPage />}></Route>
+                    <Route path="/signup" element={<SignupPage />}></Route>
                     <Route path="/timeline" element={<TimelinePage />} />
-                    <Route path="signup" element={<SignupPage />}></Route>
                 </Routes>
             </Contexts>
         </BrowserRouter>
