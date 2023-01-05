@@ -4,7 +4,7 @@ import COLORS from "../../common/constants/colors";
 export const StyledTimelinePage = styled.main`
     background-color: ${COLORS.base};
     min-height: calc(100vh - 72px);
-    margin-top: 72px;
+    padding-top: 72px;
     color: ${COLORS.text1};
     display: flex;
     flex-direction: column;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LinkrResources from "../../common/services/LinkrResources";
+import Header from "../../components/Header/Header";
 import { PostCard, PostForm, StyledTimelinePage } from "./style";
 
 function TimelinePage() {
@@ -49,46 +50,49 @@ function TimelinePage() {
     }, []);
 
     return (
-        <StyledTimelinePage>
-            <h2>timeline</h2>
-            <PostCard>
-                {window.screen.width >= 611 ? (
-                    <img
-                        alt="User profile"
-                        src="https://images2.alphacoders.com/495/495160.png"
-                    />
-                ) : (
-                    ""
-                )}
-                <PostForm onSubmit={submitPost} isLoading={isLoading}>
-                    <h3>What are you going to share today?</h3>
-                    <input
-                        type="url"
-                        placeholder="http:// ..."
-                        name="link"
-                        onChange={handleForm}
-                        value={link}
-                        required
-                        disabled={isLoading}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Awesome article about #javascript"
-                        name="description"
-                        onChange={handleForm}
-                        value={description}
-                        disabled={isLoading}
-                    />
-                    <div>
-                        {isLoading ? (
-                            <button disabled>Publishing...</button>
-                        ) : (
-                            <button>Publish</button>
-                        )}
-                    </div>
-                </PostForm>
-            </PostCard>
-        </StyledTimelinePage>
+        <>
+            <Header />
+            <StyledTimelinePage>
+                <h2>timeline</h2>
+                <PostCard>
+                    {window.screen.width >= 611 ? (
+                        <img
+                            alt="User profile"
+                            src="https://images2.alphacoders.com/495/495160.png"
+                        />
+                    ) : (
+                        ""
+                    )}
+                    <PostForm onSubmit={submitPost} isLoading={isLoading}>
+                        <h3>What are you going to share today?</h3>
+                        <input
+                            type="url"
+                            placeholder="http:// ..."
+                            name="link"
+                            onChange={handleForm}
+                            value={link}
+                            required
+                            disabled={isLoading}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Awesome article about #javascript"
+                            name="description"
+                            onChange={handleForm}
+                            value={description}
+                            disabled={isLoading}
+                        />
+                        <div>
+                            {isLoading ? (
+                                <button disabled>Publishing...</button>
+                            ) : (
+                                <button>Publish</button>
+                            )}
+                        </div>
+                    </PostForm>
+                </PostCard>
+            </StyledTimelinePage>
+        </>
     );
 }
 
