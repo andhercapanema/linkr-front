@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import LinkrResources from "../../common/services/LinkrResources";
-import { PostCard, PostForm, StyledTimelinePage } from "./style";
+import Post from "./Post";
+import { PostCard, PostForm, PostsList, StyledTimelinePage } from "./style";
 
 function TimelinePage() {
     const [form, setForm] = useState({
@@ -8,7 +9,8 @@ function TimelinePage() {
         description: "",
     });
     const { link, description } = form;
-    const [isLoading, setIsLoading] = useState(false);
+    const [formIsLoading, setFormIsLoading] = useState(false);
+    const [postsAreLoading, setPostsAreLoading] = useState(true);
     const userToken = "banana";
     const [posts, setPosts] = useState([]);
 
@@ -17,37 +19,58 @@ function TimelinePage() {
         setForm({ ...form, [name]: value });
     }
 
-    async function updateTimeline() {
+    const updateTimeline = useCallback(async () => {
         try {
-            const res = await LinkrResources.getPosts(userToken);
-            setPosts(res.data);
+            const res = await LinkrResources.getLastPosts(userToken);
+            const updatedPosts = res.data;
+
+            for (const post of updatedPosts) {
+                const res = await LinkrResources.getUser(
+                    post.user_id,
+                    userToken
+                );
+                post.user = res.data;
+
+                const metadata = await LinkrResources.getLinkMetadata(
+                    post.id,
+                    userToken
+                );
+                post.metadata = metadata.data;
+            }
+
+            console.log(updatedPosts);
+            setPosts(updatedPosts);
+            setPostsAreLoading(false);
         } catch (err) {
-            alert(err.response.data.message);
+            alert(
+                "An error occured while trying to fetch the posts, please refresh the page"
+            );
             console.error(err.response);
         }
-    }
+    }, []);
 
     function submitPost(e) {
         e.preventDefault();
-        setIsLoading(true);
+        setFormIsLoading(true);
 
         try {
             LinkrResources.postNewPost(form, userToken);
 
-            setIsLoading(false);
+            setFormIsLoading(false);
             setForm({ link: "", description: "" });
             updateTimeline();
         } catch (err) {
             alert("There was an error publishing your link");
             console.error(err.response);
-            setIsLoading(false);
+            setFormIsLoading(false);
         }
     }
 
     useEffect(() => {
         updateTimeline();
-    }, []);
+    }, [updateTimeline]);
 
+    console.log(posts);
     return (
         <StyledTimelinePage>
             <h2>timeline</h2>
@@ -60,7 +83,7 @@ function TimelinePage() {
                 ) : (
                     ""
                 )}
-                <PostForm onSubmit={submitPost} isLoading={isLoading}>
+                <PostForm onSubmit={submitPost} isLoading={formIsLoading}>
                     <h3>What are you going to share today?</h3>
                     <input
                         type="url"
@@ -69,7 +92,7 @@ function TimelinePage() {
                         onChange={handleForm}
                         value={link}
                         required
-                        disabled={isLoading}
+                        disabled={formIsLoading}
                     />
                     <input
                         type="text"
@@ -77,10 +100,10 @@ function TimelinePage() {
                         name="description"
                         onChange={handleForm}
                         value={description}
-                        disabled={isLoading}
+                        disabled={formIsLoading}
                     />
                     <div>
-                        {isLoading ? (
+                        {formIsLoading ? (
                             <button disabled>Publishing...</button>
                         ) : (
                             <button>Publish</button>
@@ -88,6 +111,17 @@ function TimelinePage() {
                     </div>
                 </PostForm>
             </PostCard>
+            {postsAreLoading ? (
+                <h4>Loading...</h4>
+            ) : (
+                <PostsList>
+                    {posts.length === 0 ? (
+                        <h4>There are no posts yet</h4>
+                    ) : (
+                        posts.map((post) => <Post key={post.id} post={post} />)
+                    )}
+                </PostsList>
+            )}
         </StyledTimelinePage>
     );
 }

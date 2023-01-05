@@ -25,6 +25,26 @@ export const StyledTimelinePage = styled.main`
             padding: 78px 0 43px;
         }
     }
+
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+
+        @media (min-width: 611px) {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    h4 {
+        font-family: "Lato";
+        text-align: center;
+        font-weight: 500;
+        font-size: 25px;
+        margin-top: 15px;
+    }
 `;
 
 export const PostCard = styled.div`
@@ -42,11 +62,7 @@ export const PostCard = styled.div`
     }
 
     img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
         margin-right: 18px;
-        object-fit: cover;
     }
 `;
 
@@ -113,5 +129,146 @@ export const PostForm = styled.form`
             font-size: 13px;
             line-height: 16px;
         }
+    }
+`;
+
+export const PostsList = styled.ul`
+    margin-top: 16px;
+    width: 100%;
+    font-family: "Lato";
+`;
+
+export const StyledPost = styled.li`
+    background-color: ${COLORS.accent1};
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    display: flex;
+
+    @media (min-width: 611px) {
+        border-radius: 16px;
+        padding: 20px;
+    }
+`;
+
+export const LikesColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 14px;
+
+    @media (min-width: 611px) {
+        margin-right: 19px;
+    }
+
+    ion-icon {
+        font-size: 17px;
+        margin: 17px 0 12px;
+
+        @media (min-width: 611px) {
+            font-size: 20px;
+            margin: 19px 0 4px;
+        }
+    }
+
+    p {
+        font-size: 9px;
+        line-height: 11px;
+        text-align: center;
+
+        @media (min-width: 611px) {
+            font-size: 11px;
+            line-height: 13px;
+        }
+    }
+`;
+
+export const PostInfos = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    h4 {
+        margin-top: 0;
+        font-weight: 400;
+        text-align: start;
+
+        font-size: 17px;
+        line-height: 20px;
+        margin-bottom: 7px;
+
+        @media (min-width: 611px) {
+            font-size: 19px;
+            line-height: 23px;
+        }
+    }
+
+    p {
+        font-size: 15px;
+        line-height: 18px;
+        color: ${COLORS.text3};
+        margin-bottom: 13px;
+
+        @media (min-width: 611px) {
+            font-size: 17px;
+            line-height: 20px;
+        }
+    }
+`;
+
+export const StyledLinkSnippet = styled.a`
+    display: flex;
+    text-decoration: none;
+    border: 1px solid #4d4d4d;
+    border-radius: 11px;
+
+    div {
+        padding: 8px 0 8px 11px;
+        width: 67%;
+
+        @media (min-width: 611px) {
+            padding: 24px 0 24px 20px;
+        }
+
+        h5 {
+            font-size: 11px;
+            line-height: 13px;
+            color: ${COLORS.text4};
+            margin-bottom: 4px;
+
+            @media (min-width: 611px) {
+                font-size: 16px;
+                line-height: 19px;
+            }
+        }
+
+        p,
+        h6 {
+            font-size: 9px;
+            line-height: 11px;
+
+            @media (min-width: 611px) {
+                font-size: 11px;
+                line-height: 13px;
+            }
+        }
+
+        p {
+            color: ${COLORS.text5};
+            margin-bottom: 4px;
+
+            @media (min-width: 611px) {
+                margin-bottom: 13px;
+            }
+        }
+
+        h6 {
+            color: ${COLORS.text4};
+        }
+    }
+
+    img {
+        width: 33%;
+        height: 100%;
+        border-radius: 0px 11px 11px 0px;
     }
 `;
