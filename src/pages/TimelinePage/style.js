@@ -4,13 +4,11 @@ import COLORS from "../../common/constants/colors";
 export const StyledTimelinePage = styled.main`
     background-color: ${COLORS.base};
     min-height: calc(100vh - 72px);
-    padding-top: 72px;
     color: ${COLORS.text1};
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0 calc((100vw - 611px) / 2);
-
     h2 {
         font-family: "Oswald";
         font-weight: 700;
