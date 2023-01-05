@@ -13,6 +13,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<SigninPage />}></Route>
                     <Route path="/signup" element={<SignupPage />}></Route>
+                    
                     <Route path="/timeline" element={<TimelinePage />} />
                 </Routes>
             </Contexts>
