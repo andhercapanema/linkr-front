@@ -12,7 +12,7 @@ export default function Header() {
     const [vector, setVector] = useState(down);
     const [name, setName] = useState("down");
 
-    const { picture } = useContext(AuthContext);
+    const { picture, setToken } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -27,6 +27,7 @@ export default function Header() {
     }
 
     function logoutButton() {
+        setToken("");
         navigate("/");
     }
 

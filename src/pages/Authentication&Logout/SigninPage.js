@@ -25,7 +25,6 @@ export default function SigninPage() {
             email: emailSignin,
             password: passwordSigin
         }
-        teste
 
         const promise = axios.post(URL, body);
 
