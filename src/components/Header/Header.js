@@ -2,14 +2,17 @@ import logo from "../../assets/styles/Image/linkr.png";
 import up from "../../assets/styles/Image/up.png";
 import down from "../../assets/styles/Image/down.png";
 import teste from "../../assets/styles/Image/teste.png";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { HeaderTimeline, Right, Logout } from "./StyleHeader.js";
+import { AuthContext } from "../../Ayth";
 
 export default function Header() {
 
     const [vector, setVector] = useState(down);
     const [name, setName] = useState("down");
+
+    const { picture } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -38,7 +41,7 @@ export default function Header() {
                         <img src={vector} alt={name} />
                     </h2>
                     <h3 onClick={logout}>
-                        <img src={teste} alt="teste" />
+                        <img src={picture} alt="teste" />
                     </h3>
                 </Right>
             </HeaderTimeline>

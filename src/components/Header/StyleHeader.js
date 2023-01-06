@@ -25,9 +25,11 @@ export const Right = styled.div`
         align-items: center;
     }
     h3{
+        img{
         width: 52px;
         height: 52px;
         border-radius: 26.5px;
+    }
     }
 
 `

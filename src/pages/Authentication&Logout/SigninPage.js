@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { All, Left, Right, Input, Button, Siginup } from "./StyleAuthentication";
+import { AuthContext } from "../../Ayth";
 
 
 export default function SigninPage() {
@@ -11,7 +12,7 @@ export default function SigninPage() {
     const [disable, setDisable] = useState(false);
     const navigate = useNavigate();
 
-    //const { setToken } = useContext(AuthContext);
+    const { setUsername, setPicture, setToken } = useContext(AuthContext);
 
     function login(e) {
         e.preventDefault();
@@ -25,12 +26,12 @@ export default function SigninPage() {
             password: passwordSigin
         }
 
-        console.log("bodySignin", body);
-
         const promise = axios.post(URL, body);
 
         promise.then((res) => {
-            //setToken(res.data.token);
+            setToken(res.data[0]);
+            setPicture(res.data[1].picture_url);
+            setUsername(res.data[1].username);
             navigate("/timeline");
         })
 
