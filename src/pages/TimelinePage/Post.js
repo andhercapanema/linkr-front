@@ -8,7 +8,7 @@ import {
     UsernameEditDelete,
 } from "./style";
 
-function Post({ post, user: loggedUser }) {
+function Post({ post, username: loggedUsername }) {
     const {
         id,
         description: dbDescription,
@@ -16,7 +16,7 @@ function Post({ post, user: loggedUser }) {
         user,
         metadata,
     } = post;
-    const postAuthorIsLoggedUser = loggedUser.id === user.id;
+    const postAuthorIsLoggedUser = loggedUsername === user.username;
     const [isEditing, setIsEditing] = useState(false);
     const [editedDescription, setEditedDescription] = useState(dbDescription);
     const [description, setDescription] = useState(dbDescription);

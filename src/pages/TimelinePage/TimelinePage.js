@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Ayth";
 import LinkrResources from "../../common/services/LinkrResources";
 import Header from "../../components/Header/Header";
 import Post from "./Post";
@@ -12,20 +13,9 @@ function TimelinePage() {
     const { link, description } = form;
     const [formIsLoading, setFormIsLoading] = useState(false);
     const [postsAreLoading, setPostsAreLoading] = useState(true);
-    const userToken = "banana";
     const [posts, setPosts] = useState([]);
-    const [user, setUser] = useState({});
 
-    const getLoggedUserInfo = useCallback(async () => {
-        try {
-            const res = await LinkrResources.getLoggedUser(userToken);
-
-            setUser(res.data);
-        } catch (err) {
-            alert(err.response.data.message);
-            console.error(err.response);
-        }
-    }, []);
+    const { username, picture: userPicture, token } = useContext(AuthContext);
 
     function handleForm(e) {
         const { name, value } = e.target;
@@ -34,19 +24,16 @@ function TimelinePage() {
 
     const updateTimeline = useCallback(async () => {
         try {
-            const res = await LinkrResources.getLastPosts(userToken);
+            const res = await LinkrResources.getLastPosts(token);
             const updatedPosts = res.data;
 
             for (const post of updatedPosts) {
-                const res = await LinkrResources.getUser(
-                    post.user_id,
-                    userToken
-                );
+                const res = await LinkrResources.getUser(post.user_id, token);
                 post.user = res.data;
 
                 const metadata = await LinkrResources.getLinkMetadata(
                     post.id,
-                    userToken
+                    token
                 );
                 post.metadata = metadata.data;
             }
@@ -59,14 +46,14 @@ function TimelinePage() {
             );
             console.error(err.response);
         }
-    }, []);
+    }, [token]);
 
     async function submitPost(e) {
         e.preventDefault();
         setFormIsLoading(true);
 
         try {
-            await LinkrResources.postNewPost(form, userToken);
+            await LinkrResources.postNewPost(form, token);
 
             setForm({ link: "", description: "" });
             await updateTimeline();
@@ -80,18 +67,17 @@ function TimelinePage() {
 
     useEffect(() => {
         updateTimeline();
-        getLoggedUserInfo();
-    }, [updateTimeline, getLoggedUserInfo]);
+    }, [updateTimeline]);
 
     return (
         <>
             <Header />
             <StyledTimelinePage>
                 <h2>timeline</h2>
-                {user.picture_url && (
+                {userPicture && (
                     <PostCard>
                         {window.screen.width >= 611 && (
-                            <img alt="User profile" src={user.picture_url} />
+                            <img alt="User profile" src={userPicture} />
                         )}
                         <PostForm
                             onSubmit={submitPost}
@@ -134,7 +120,11 @@ function TimelinePage() {
                             <h4>There are no posts yet</h4>
                         ) : (
                             posts.map((post) => (
-                                <Post key={post.id} post={post} user={user} />
+                                <Post
+                                    key={post.id}
+                                    post={post}
+                                    username={username}
+                                />
                             ))
                         )}
                     </PostsList>
