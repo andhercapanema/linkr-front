@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import LinkrResources from "../../common/services/LinkrResources";
+import Header from "../../components/Header/Header";
 import Post from "./Post";
 import { PostCard, PostForm, PostsList, StyledTimelinePage } from "./style";
 
@@ -83,34 +84,39 @@ function TimelinePage() {
     }, [updateTimeline, getLoggedUserInfo]);
 
     return (
-        <StyledTimelinePage>
-            <h2>timeline</h2>
-            {user.picture_url && (
-                <PostCard>
-                    {window.screen.width >= 611 && (
-                        <img alt="User profile" src={user.picture_url} />
-                    )}
-                    <PostForm onSubmit={submitPost} isLoading={formIsLoading}>
-                        <h3>What are you going to share today?</h3>
-                        <input
-                            type="url"
-                            placeholder="http:// ..."
-                            name="link"
-                            onChange={handleForm}
-                            value={link}
-                            required
-                            disabled={formIsLoading}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Awesome article about #javascript"
-                            name="description"
-                            onChange={handleForm}
-                            value={description}
-                            disabled={formIsLoading}
-                        />
-                        <div>
-                            {formIsLoading ? (
+      <>
+            <Header />
+            <StyledTimelinePage>
+                <h2>timeline</h2>
+                {user.picture_url && (
+                    <PostCard>
+                        {window.screen.width >= 611 && (
+                            <img alt="User profile" src={user.picture_url} />
+                        )}
+                        <PostForm onSubmit={submitPost} isLoading={formIsLoading}>
+
+
+
+                          <h3>What are you going to share today?</h3>
+                          <input
+                              type="url"
+                              placeholder="http:// ..."
+                              name="link"
+                              onChange={handleForm}
+                              value={link}
+                              required
+                              disabled={formIsLoading}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Awesome article about #javascript"
+                                name="description"
+                                onChange={handleForm}
+                                value={description}
+                                disabled={formIsLoading}
+                            />
+                            <div>
+                                {formIsLoading ? (
                                 <button disabled>Publishing...</button>
                             ) : (
                                 <button>Publish</button>
