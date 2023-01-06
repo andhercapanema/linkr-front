@@ -13,6 +13,18 @@ function TimelinePage() {
     const [postsAreLoading, setPostsAreLoading] = useState(true);
     const userToken = "banana";
     const [posts, setPosts] = useState([]);
+    const [user, setUser] = useState({});
+
+    const getLoggedUserInfo = useCallback(async () => {
+        try {
+            const res = await LinkrResources.getLoggedUser(userToken);
+
+            setUser(res.data);
+        } catch (err) {
+            alert(err.response.data.message);
+            console.error(err.response);
+        }
+    }, []);
 
     function handleForm(e) {
         const { name, value } = e.target;
@@ -38,7 +50,6 @@ function TimelinePage() {
                 post.metadata = metadata.data;
             }
 
-            console.log(updatedPosts);
             setPosts(updatedPosts);
             setPostsAreLoading(false);
         } catch (err) {
@@ -49,16 +60,16 @@ function TimelinePage() {
         }
     }, []);
 
-    function submitPost(e) {
+    async function submitPost(e) {
         e.preventDefault();
         setFormIsLoading(true);
 
         try {
-            LinkrResources.postNewPost(form, userToken);
+            await LinkrResources.postNewPost(form, userToken);
 
-            setFormIsLoading(false);
             setForm({ link: "", description: "" });
-            updateTimeline();
+            await updateTimeline();
+            setFormIsLoading(false);
         } catch (err) {
             alert("There was an error publishing your link");
             console.error(err.response);
@@ -68,49 +79,47 @@ function TimelinePage() {
 
     useEffect(() => {
         updateTimeline();
-    }, [updateTimeline]);
+        getLoggedUserInfo();
+    }, [updateTimeline, getLoggedUserInfo]);
 
-    console.log(posts);
     return (
         <StyledTimelinePage>
             <h2>timeline</h2>
-            <PostCard>
-                {window.screen.width >= 611 ? (
-                    <img
-                        alt="User profile"
-                        src="https://images2.alphacoders.com/495/495160.png"
-                    />
-                ) : (
-                    ""
-                )}
-                <PostForm onSubmit={submitPost} isLoading={formIsLoading}>
-                    <h3>What are you going to share today?</h3>
-                    <input
-                        type="url"
-                        placeholder="http:// ..."
-                        name="link"
-                        onChange={handleForm}
-                        value={link}
-                        required
-                        disabled={formIsLoading}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Awesome article about #javascript"
-                        name="description"
-                        onChange={handleForm}
-                        value={description}
-                        disabled={formIsLoading}
-                    />
-                    <div>
-                        {formIsLoading ? (
-                            <button disabled>Publishing...</button>
-                        ) : (
-                            <button>Publish</button>
-                        )}
-                    </div>
-                </PostForm>
-            </PostCard>
+            {user.picture_url && (
+                <PostCard>
+                    {window.screen.width >= 611 && (
+                        <img alt="User profile" src={user.picture_url} />
+                    )}
+                    <PostForm onSubmit={submitPost} isLoading={formIsLoading}>
+                        <h3>What are you going to share today?</h3>
+                        <input
+                            type="url"
+                            placeholder="http:// ..."
+                            name="link"
+                            onChange={handleForm}
+                            value={link}
+                            required
+                            disabled={formIsLoading}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Awesome article about #javascript"
+                            name="description"
+                            onChange={handleForm}
+                            value={description}
+                            disabled={formIsLoading}
+                        />
+                        <div>
+                            {formIsLoading ? (
+                                <button disabled>Publishing...</button>
+                            ) : (
+                                <button>Publish</button>
+                            )}
+                        </div>
+                    </PostForm>
+                </PostCard>
+            )}
+
             {postsAreLoading ? (
                 <h4>Loading...</h4>
             ) : (
@@ -118,7 +127,9 @@ function TimelinePage() {
                     {posts.length === 0 ? (
                         <h4>There are no posts yet</h4>
                     ) : (
-                        posts.map((post) => <Post key={post.id} post={post} />)
+                        posts.map((post) => (
+                            <Post key={post.id} post={post} user={user} />
+                        ))
                     )}
                 </PostsList>
             )}

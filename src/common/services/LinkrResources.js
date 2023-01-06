@@ -12,6 +12,9 @@ const LinkrResources = {
     getLinkMetadata: (id, token) =>
         api.get(`/posts/metadata/${id}`, headers(token)),
     getUser: (id, token) => api.get(`/users/${id}`, headers(token)),
+    getLoggedUser: (token) => api.get(`/users/me`, headers(token)),
+    editPostDescription: (id, body, token) =>
+        api.patch(`/posts/${id}`, body, headers(token)),
 };
 
 export default LinkrResources;

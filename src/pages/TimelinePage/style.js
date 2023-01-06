@@ -163,6 +163,7 @@ export const LikesColumn = styled.div`
     ion-icon {
         font-size: 17px;
         margin: 17px 0 12px;
+        cursor: pointer;
 
         @media (min-width: 611px) {
             font-size: 20px;
@@ -187,19 +188,16 @@ export const PostInfos = styled.div`
     flex-direction: column;
     width: 100%;
 
-    h4 {
-        margin-top: 0;
-        font-weight: 400;
-        text-align: start;
+    input {
+        margin-bottom: 8px;
+        padding: 5px 10px;
+        border-radius: 7px;
+        border: none;
+        width: 100%;
 
-        font-size: 17px;
-        line-height: 20px;
-        margin-bottom: 7px;
-
-        @media (min-width: 611px) {
-            font-size: 19px;
-            line-height: 23px;
-        }
+        font-size: 14px;
+        line-height: 17px;
+        color: #4c4c4c;
     }
 
     p {
@@ -211,6 +209,36 @@ export const PostInfos = styled.div`
         @media (min-width: 611px) {
             font-size: 17px;
             line-height: 20px;
+        }
+    }
+`;
+
+export const UsernameEditDelete = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+
+    h4 {
+        margin-top: 0;
+        font-weight: 400;
+        text-align: start;
+
+        font-size: 17px;
+        line-height: 20px;
+
+        @media (min-width: 611px) {
+            font-size: 19px;
+            line-height: 23px;
+        }
+    }
+
+    ion-icon {
+        font-size: 17px;
+        margin-left: 12px;
+        cursor: pointer;
+
+        @media (min-width: 611px) {
+            font-size: 19px;
         }
     }
 `;
