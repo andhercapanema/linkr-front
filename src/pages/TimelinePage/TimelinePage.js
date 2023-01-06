@@ -84,7 +84,7 @@ function TimelinePage() {
     }, [updateTimeline, getLoggedUserInfo]);
 
     return (
-      <>
+        <>
             <Header />
             <StyledTimelinePage>
                 <h2>timeline</h2>
@@ -93,19 +93,19 @@ function TimelinePage() {
                         {window.screen.width >= 611 && (
                             <img alt="User profile" src={user.picture_url} />
                         )}
-                        <PostForm onSubmit={submitPost} isLoading={formIsLoading}>
-
-
-
-                          <h3>What are you going to share today?</h3>
-                          <input
-                              type="url"
-                              placeholder="http:// ..."
-                              name="link"
-                              onChange={handleForm}
-                              value={link}
-                              required
-                              disabled={formIsLoading}
+                        <PostForm
+                            onSubmit={submitPost}
+                            isLoading={formIsLoading}
+                        >
+                            <h3>What are you going to share today?</h3>
+                            <input
+                                type="url"
+                                placeholder="http:// ..."
+                                name="link"
+                                onChange={handleForm}
+                                value={link}
+                                required
+                                disabled={formIsLoading}
                             />
                             <input
                                 type="text"
@@ -117,29 +117,30 @@ function TimelinePage() {
                             />
                             <div>
                                 {formIsLoading ? (
-                                <button disabled>Publishing...</button>
-                            ) : (
-                                <button>Publish</button>
-                            )}
-                        </div>
-                    </PostForm>
-                </PostCard>
-            )}
+                                    <button disabled>Publishing...</button>
+                                ) : (
+                                    <button>Publish</button>
+                                )}
+                            </div>
+                        </PostForm>
+                    </PostCard>
+                )}
 
-            {postsAreLoading ? (
-                <h4>Loading...</h4>
-            ) : (
-                <PostsList>
-                    {posts.length === 0 ? (
-                        <h4>There are no posts yet</h4>
-                    ) : (
-                        posts.map((post) => (
-                            <Post key={post.id} post={post} user={user} />
-                        ))
-                    )}
-                </PostsList>
-            )}
-        </StyledTimelinePage>
+                {postsAreLoading ? (
+                    <h4>Loading...</h4>
+                ) : (
+                    <PostsList>
+                        {posts.length === 0 ? (
+                            <h4>There are no posts yet</h4>
+                        ) : (
+                            posts.map((post) => (
+                                <Post key={post.id} post={post} user={user} />
+                            ))
+                        )}
+                    </PostsList>
+                )}
+            </StyledTimelinePage>
+        </>
     );
 }
 
