@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../../Ayth";
 import LinkrResources from "../../common/services/LinkrResources";
+import DeleteModal from "./DeleteModal";
 import LinkSnippet from "./LinkSnippet";
 import {
     LikesColumn,
@@ -8,7 +10,7 @@ import {
     UsernameEditDelete,
 } from "./style";
 
-function Post({ post, username: loggedUsername }) {
+function Post({ post, updateTimeline }) {
     const {
         id,
         description: dbDescription,
@@ -16,21 +18,21 @@ function Post({ post, username: loggedUsername }) {
         user,
         metadata,
     } = post;
+    const { username: loggedUsername, token } = useContext(AuthContext);
+
     const postAuthorIsLoggedUser = loggedUsername === user.username;
+
     const [isEditing, setIsEditing] = useState(false);
     const [editedDescription, setEditedDescription] = useState(dbDescription);
     const [description, setDescription] = useState(dbDescription);
     const inputRef = useRef(null);
-    const userToken = "banana";
     const [editionIsLoading, setEditionIsLoading] = useState(false);
+
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
 
     function editPost() {
         if (isEditing) setEditedDescription(description);
         setIsEditing((prev) => !prev);
-    }
-
-    function changeDescription(e) {
-        setEditedDescription(e.target.value);
     }
 
     async function saveChanges(e) {
@@ -41,7 +43,7 @@ function Post({ post, username: loggedUsername }) {
             await LinkrResources.editPostDescription(
                 id,
                 { description: editedDescription },
-                userToken
+                token
             );
 
             setEditionIsLoading(false);
@@ -68,6 +70,7 @@ function Post({ post, username: loggedUsername }) {
             });
     }, [isEditing, description]);
 
+    console.log(post);
     return (
         <StyledPost>
             <LikesColumn>
@@ -84,14 +87,25 @@ function Post({ post, username: loggedUsername }) {
                                 name="create"
                                 onClick={editPost}
                             ></ion-icon>
-                            <ion-icon name="trash"></ion-icon>
+                            <ion-icon
+                                name="trash"
+                                onClick={() => setDeleteModalIsOpen(true)}
+                            ></ion-icon>
+                            <DeleteModal
+                                deleteModalIsOpen={deleteModalIsOpen}
+                                setDeleteModalIsOpen={setDeleteModalIsOpen}
+                                postId={post.id}
+                                updateTimeline={updateTimeline}
+                            />
                         </div>
                     )}
                 </UsernameEditDelete>
                 {isEditing ? (
                     <form onSubmit={saveChanges}>
                         <input
-                            onChange={changeDescription}
+                            onChange={(e) =>
+                                setEditedDescription(e.target.value)
+                            }
                             value={editedDescription}
                             ref={inputRef}
                             disabled={editionIsLoading}

@@ -244,10 +244,11 @@ export const UsernameEditDelete = styled.div`
 export const StyledLinkSnippet = styled.a`
     display: flex;
     text-decoration: none;
-    border: 1px solid #4d4d4d;
-    border-radius: 11px;
 
     div {
+        border: 1px solid #4d4d4d;
+        border-right: none;
+        border-radius: 11px 0px 0px 11px;
         padding: 8px 0 8px 11px;
         width: 67%;
 

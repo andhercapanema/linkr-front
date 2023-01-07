@@ -15,7 +15,7 @@ function TimelinePage() {
     const [postsAreLoading, setPostsAreLoading] = useState(true);
     const [posts, setPosts] = useState([]);
 
-    const { username, picture: userPicture, token } = useContext(AuthContext);
+    const { picture: userPicture, token } = useContext(AuthContext);
 
     function handleForm(e) {
         const { name, value } = e.target;
@@ -123,7 +123,7 @@ function TimelinePage() {
                                 <Post
                                     key={post.id}
                                     post={post}
-                                    username={username}
+                                    updateTimeline={updateTimeline}
                                 />
                             ))
                         )}
