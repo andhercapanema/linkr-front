@@ -1,0 +1,97 @@
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Modal {
+    background: #333;
+    overflow: auto;
+    width: 100%;
+    max-width: 600px;
+    padding: 25px 40px;
+
+    font-family: "Lato";
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.Modal h1 {
+    font-weight: 700;
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+    max-width: 280px;
+
+    margin-bottom: 25px;
+}
+
+.Modal div {
+    display: flex;
+    justify-content: space-between;
+    max-width: 295px;
+}
+
+.Modal div button {
+    width: 134px;
+    height: 37px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.Modal div button:first-of-type {
+    margin-right: 27px;
+    background: #fff;
+    color: #1877f2;
+}
+
+.Modal div button:last-of-type {
+    background: #1877f2;
+    color: #fff;
+}
+
+@media (min-width: 600px) {
+    .Modal {
+        border-radius: 50px;
+        height: 262px;
+        padding: 40px 130px;
+    }
+
+    .Modal h1 {
+        font-size: 34px;
+        line-height: 41px;
+        margin-bottom: 40px;
+        max-width: 340px;
+    }
+}
+
+@media (max-width: 349px) {
+    .Modal div {
+        flex-direction: column;
+    }
+
+    .Modal div button:first-of-type {
+        margin-right: 0px;
+        margin-bottom: 15px;
+    }
+}
+
+.is-loading {
+    opacity: 0.7;
+    cursor: default;
+}
