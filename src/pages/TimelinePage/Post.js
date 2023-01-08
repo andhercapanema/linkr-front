@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../../Ayth";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { useNavigate } from "react-router";
 import LinkrResources from "../../common/services/LinkrResources";
 import DeleteModal from "./DeleteModal";
 import LinkSnippet from "./LinkSnippet";
@@ -9,6 +9,7 @@ import {
     StyledPost,
     UsernameEditDelete,
 } from "./style";
+import { AuthContext } from "../../Ayth";
 
 function Post({ post, updateTimeline }) {
     const {
@@ -28,11 +29,23 @@ function Post({ post, updateTimeline }) {
     const inputRef = useRef(null);
     const [editionIsLoading, setEditionIsLoading] = useState(false);
 
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const { setUser } = useContext(AuthContext);
+
+
+    const navigate = useNavigate();
 
     function editPost() {
         if (isEditing) setEditedDescription(description);
         setIsEditing((prev) => !prev);
+    }
+
+    function changeDescription(e) {
+        setEditedDescription(e.target.value);
+    }
+
+    function redirectToUserPage(){
+        setUser(user);
+        navigate("/userPosts");
     }
 
     async function saveChanges(e) {
@@ -74,7 +87,7 @@ function Post({ post, updateTimeline }) {
     return (
         <StyledPost>
             <LikesColumn>
-                <img alt="User profile" src={user.picture_url} />
+                <img alt="User profile" src={user.picture_url} onClick={redirectToUserPage} />
                 <ion-icon name="heart-outline"></ion-icon>
                 <p>{likesAmount} likes</p>
             </LikesColumn>

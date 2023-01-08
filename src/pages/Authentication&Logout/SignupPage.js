@@ -34,7 +34,6 @@ export default function SignupPage() {
         const promise = axios.post(URL, body);
 
         promise.then((res) => {
-            //setToken(res.data.token);
             navigate("/");
         })
 
