@@ -179,6 +179,9 @@ export const LikesColumn = styled.div`
             line-height: 13px;
         }
     }
+    .red{
+        background-color: red;
+    }
 `;
 
 export const PostInfos = styled.div`

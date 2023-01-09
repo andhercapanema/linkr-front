@@ -14,6 +14,8 @@ function TimelinePage() {
     const [formIsLoading, setFormIsLoading] = useState(false);
     const [postsAreLoading, setPostsAreLoading] = useState(true);
     const [posts, setPosts] = useState([]);
+    const [hashtags, setHashtags] = useState([])
+    const userToken = "banana";
 
     const { picture: userPicture, token } = useContext(AuthContext);
 
@@ -65,8 +67,20 @@ function TimelinePage() {
         }
     }
 
+    async function getTrendingHashtags(){
+        
+        try {
+            const res = await LinkrResources.getTrendingHashtags(userToken)
+            setHashtags(res.data)
+        } catch (error) {
+            console.log(error.response)
+            alert(error.message)
+        }
+    }
+
     useEffect(() => {
         updateTimeline();
+        getTrendingHashtags();
     }, [updateTimeline]);
 
     return (
