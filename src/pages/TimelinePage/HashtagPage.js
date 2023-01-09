@@ -67,9 +67,9 @@ function HashtagPage() {
         <Header/>
         <StyledTimelinePage>
             <h2>#{hashtag}</h2>
-            {/* {postsAreLoading ? (
+            {postsAreLoading ? (
                 <h4>Loading...</h4>
-            ) : ( */}
+            ) : (
                <DividedScreen> 
                 <PostsList>
                     {posts.length === 0 ? (
@@ -81,11 +81,11 @@ function HashtagPage() {
                 <HashtagsList>
                     <h3>trending</h3>
                     <ElementsOfArray>
-                        {testArray.map(hash => <p><Link to={`/hashtag/${hash}`}>{hash}</Link></p>)}
+                        {hashtags.map(hash => <p><Link to={`/hashtag/${hash}`}>{hash}</Link></p>)}
                     </ElementsOfArray>    
                 </HashtagsList>
                 </DividedScreen>
-            {/* )} */}
+            )}
         </StyledTimelinePage>
         </>
     );
