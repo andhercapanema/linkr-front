@@ -1,14 +1,13 @@
 import logo from "../../assets/styles/Image/linkr.png";
 import up from "../../assets/styles/Image/up.png";
 import down from "../../assets/styles/Image/down.png";
-import teste from "../../assets/styles/Image/teste.png";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
-import { HeaderTimeline, Right, Logout } from "./StyleHeader.js";
+import { HeaderTimeline, Right, Logout, StyledHeader } from "./StyleHeader.js";
 import { AuthContext } from "../../Ayth";
+import SearchBar from "../SearchBar/SearchBar";
 
 export default function Header() {
-
     const [vector, setVector] = useState(down);
     const [name, setName] = useState("down");
 
@@ -32,7 +31,7 @@ export default function Header() {
     }
 
     return (
-        <>
+        <StyledHeader>
             <HeaderTimeline>
                 <h1>
                     <img src={logo} alt="logo" />
@@ -49,6 +48,7 @@ export default function Header() {
             <Logout display={name}>
                 <button onClick={logoutButton}>Logout</button>
             </Logout>
-        </>
-    )
+            {window.screen.width >= 611 && <SearchBar />}
+        </StyledHeader>
+    );
 }

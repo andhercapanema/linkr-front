@@ -29,8 +29,9 @@ function Post({ post, updateTimeline }) {
     const inputRef = useRef(null);
     const [editionIsLoading, setEditionIsLoading] = useState(false);
 
-    const { setUser } = useContext(AuthContext);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
 
+    const { setUser } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -39,11 +40,7 @@ function Post({ post, updateTimeline }) {
         setIsEditing((prev) => !prev);
     }
 
-    function changeDescription(e) {
-        setEditedDescription(e.target.value);
-    }
-
-    function redirectToUserPage(){
+    function redirectToUserPage() {
         setUser(user);
         navigate("/userPosts");
     }
@@ -83,11 +80,14 @@ function Post({ post, updateTimeline }) {
             });
     }, [isEditing, description]);
 
-    console.log(post);
     return (
         <StyledPost>
             <LikesColumn>
-                <img alt="User profile" src={user.picture_url} onClick={redirectToUserPage} />
+                <img
+                    alt="User profile"
+                    src={user.picture_url}
+                    onClick={redirectToUserPage}
+                />
                 <ion-icon name="heart-outline"></ion-icon>
                 <p>{likesAmount} likes</p>
             </LikesColumn>

@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Ayth";
 import LinkrResources from "../../common/services/LinkrResources";
 import Header from "../../components/Header/Header";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import Post from "./Post";
 import { PostCard, PostForm, PostsList, StyledTimelinePage } from "./style";
 
@@ -69,10 +70,12 @@ function TimelinePage() {
         updateTimeline();
     }, [updateTimeline]);
 
+    console.log(posts);
     return (
         <>
             <Header />
             <StyledTimelinePage>
+                {window.screen.width < 611 && <SearchBar />}
                 <h2>timeline</h2>
                 {userPicture && (
                     <PostCard>
