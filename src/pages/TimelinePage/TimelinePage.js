@@ -70,6 +70,7 @@ function TimelinePage() {
         updateTimeline();
     }, [updateTimeline]);
 
+    console.log(posts);
     return (
         <>
             <Header />

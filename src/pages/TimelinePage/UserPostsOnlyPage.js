@@ -7,6 +7,8 @@ import axios from "axios";
 import { useState } from "react";
 import { StyledPost, LikesColumn, StyledLinkSnippet } from "./style";
 import COLORS from "../../common/constants/colors";
+import LinkSnippet from "./LinkSnippet";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 export default function UserPostsOnly() {
     const { user } = useContext(AuthContext);
@@ -31,8 +33,9 @@ export default function UserPostsOnly() {
         <>
             <Header />
             <StyledTimelinePage>
+                {window.screen.width < 611 && <SearchBar />}
                 <Title>
-                    <img src={user.picture_url} />
+                    <img alt="User profile" src={user.picture_url} />
                     <h1>{user.username}'s posts</h1>
                 </Title>
                 <PostsList>
@@ -53,7 +56,7 @@ export default function UserPostsOnly() {
                                 <PostInfo>
                                     <h1>{teste.description}</h1>
                                 </PostInfo>
-                                <StyledLinkSnippet
+                                {/* {<StyledLinkSnippet
                                     href={teste.link}
                                     target="_blank"
                                     rel="noreferrer"
@@ -62,14 +65,18 @@ export default function UserPostsOnly() {
                                         <h5>a</h5>
                                         <p>b</p>
                                         <h6>c</h6>
-                                    </div>
-                                    {/* <div>
+                                    </div> */}
+                                {/* <div>
                                         <h5>{title}</h5>
                                         <p>{description}</p>
                                         <h6>{url}</h6>
                                     </div> */}
-                                    {/* <img alt="Link" src={image} /> */}
-                                </StyledLinkSnippet>
+                                {/* <img alt="Link" src={image} /> */}
+                                {/* </StyledLinkSnippet>} */}
+                                <LinkSnippet
+                                    metadata={teste.metadata}
+                                    id={teste.id}
+                                />
                             </Teste>
                         </StyledPost>
                     ))}
