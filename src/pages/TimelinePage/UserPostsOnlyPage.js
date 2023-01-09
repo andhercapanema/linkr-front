@@ -9,25 +9,23 @@ import { StyledPost, LikesColumn, StyledLinkSnippet } from "./style";
 import COLORS from "../../common/constants/colors";
 
 export default function UserPostsOnly() {
-
     const { user } = useContext(AuthContext);
     const [data, setData] = useState([]);
 
-    const id = user.id
-    console.log("data", data)
+    const id = user.id;
+    console.log("data", data);
 
     useEffect(() => {
         axios
             .get(`http://localhost:4000/search/${id}`)
             .then((res) => {
-                console.log("res", res.data)
+                console.log("res", res.data);
                 setData(res.data);
             })
             .catch((err) => {
                 console.log("err userPostsOnlyPag", err);
             });
     }, [id]);
-
 
     return (
         <>
@@ -39,10 +37,12 @@ export default function UserPostsOnly() {
                 </Title>
                 <PostsList>
                     {data.map((teste) => (
-
                         <StyledPost>
                             <LikesColumn>
-                                <img alt="User profile" src={user.picture_url} />
+                                <img
+                                    alt="User profile"
+                                    src={user.picture_url}
+                                />
                                 <ion-icon name="heart-outline"></ion-icon>
                                 <p>{teste.likesAmount} likes</p>
                             </LikesColumn>
@@ -53,7 +53,11 @@ export default function UserPostsOnly() {
                                 <PostInfo>
                                     <h1>{teste.description}</h1>
                                 </PostInfo>
-                                <StyledLinkSnippet href={teste.link} target="_blank" rel="noreferrer">
+                                <StyledLinkSnippet
+                                    href={teste.link}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
                                     <div>
                                         <h5>a</h5>
                                         <p>b</p>
@@ -72,44 +76,43 @@ export default function UserPostsOnly() {
                 </PostsList>
             </StyledTimelinePage>
         </>
-    )
+    );
 }
 
 const Title = styled.div`
     display: flex;
     align-items: center;
     margin-top: 60px;
-    img{
+    img {
         margin-right: 18px;
     }
-    h1{
+    h1 {
         font-family: Oswald;
         font-size: 43px;
         font-weight: 700;
         line-height: 64px;
         letter-spacing: 0em;
         text-align: left;
-
     }
-`
+`;
 
 const Teste = styled.div`
     display: flex;
     flex-direction: column;
-`
+`;
 
 const Username = styled.div`
-    h1{
+    h1 {
         font-weight: 400;
         font-size: 17px;
         line-height: 20px;
     }
-`
+`;
 
 const PostInfo = styled.div`
-        margin-top: 5px;
+    margin-top: 5px;
 
-    h1{
+    h1 {
         font-size: 15px;
         line-height: 18px;
         color: ${COLORS.text3};
@@ -120,4 +123,4 @@ const PostInfo = styled.div`
             line-height: 20px;
         }
     }
-`
+`;

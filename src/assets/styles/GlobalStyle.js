@@ -138,6 +138,10 @@ const GlobalStyle = createGlobalStyle`
     a{
         color: #FFFFFF;
     }
+
+    img{
+        object-fit: cover;
+    }
 `;
 
 export default GlobalStyle;
