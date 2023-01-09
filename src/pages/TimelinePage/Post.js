@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../../Ayth";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { useNavigate } from "react-router";
 import LinkrResources from "../../common/services/LinkrResources";
 import DeleteModal from "./DeleteModal";
 import LinkSnippet from "./LinkSnippet";
@@ -11,6 +11,7 @@ import {
   StyledPost,
   UsernameEditDelete,
 } from "./style";
+import { AuthContext } from "../../Ayth";
 
 function Post({ post, updateTimeline }) {
   const {
@@ -43,6 +44,7 @@ function Post({ post, updateTimeline }) {
     setIsEditing((prev) => !prev);
   }
 
+
   async function saveChanges(e) {
     e.preventDefault();
     setEditionIsLoading(true);
@@ -53,6 +55,25 @@ function Post({ post, updateTimeline }) {
         { description: editedDescription },
         token
       );
+
+    const { setUser } = useContext(AuthContext);
+
+    const navigate = useNavigate();
+
+    function editPost() {
+        if (isEditing) setEditedDescription(description);
+        setIsEditing((prev) => !prev);
+    }
+
+    function redirectToUserPage() {
+        setUser(user);
+        navigate("/userPosts");
+    }
+
+    async function saveChanges(e) {
+        e.preventDefault();
+        setEditionIsLoading(true);
+
 
       setEditionIsLoading(false);
       setDescription(editedDescription);
@@ -95,6 +116,7 @@ function Post({ post, updateTimeline }) {
         }
       });
   }, [isEditing, description]);
+
 
   return (
     <StyledPost>
@@ -149,6 +171,54 @@ function Post({ post, updateTimeline }) {
             <p>{description}</p>
           </ReactTagify>
         )}
+=======
+    return (
+        <StyledPost>
+            <LikesColumn>
+                <img
+                    alt="User profile"
+                    src={user.picture_url}
+                    onClick={redirectToUserPage}
+                />
+                <ion-icon name="heart-outline"></ion-icon>
+                <p>{likesAmount} likes</p>
+            </LikesColumn>
+            <PostInfos>
+                <UsernameEditDelete>
+                    <h4>{user.username}</h4>
+                    {postAuthorIsLoggedUser && (
+                        <div>
+                            <ion-icon
+                                name="create"
+                                onClick={editPost}
+                            ></ion-icon>
+                            <ion-icon
+                                name="trash"
+                                onClick={() => setDeleteModalIsOpen(true)}
+                            ></ion-icon>
+                            <DeleteModal
+                                deleteModalIsOpen={deleteModalIsOpen}
+                                setDeleteModalIsOpen={setDeleteModalIsOpen}
+                                postId={post.id}
+                                updateTimeline={updateTimeline}
+                            />
+                        </div>
+                    )}
+                </UsernameEditDelete>
+                {isEditing ? (
+                    <form onSubmit={saveChanges}>
+                        <input
+                            onChange={(e) =>
+                                setEditedDescription(e.target.value)
+                            }
+                            value={editedDescription}
+                            ref={inputRef}
+                            disabled={editionIsLoading}
+                        />
+                    </form>
+                ) : (
+                    <p>{description}</p>
+                )}
 
         <LinkSnippet metadata={metadata} id={id} />
       </PostInfos>

@@ -9,6 +9,7 @@ export const StyledTimelinePage = styled.main`
     flex-direction: column;
     align-items: center;
     padding: 0 calc((100vw - 611px) / 2);
+
     h2 {
         font-family: "Oswald";
         font-weight: 700;
@@ -20,7 +21,8 @@ export const StyledTimelinePage = styled.main`
         padding: 19px 0 19px 17px;
 
         @media (min-width: 611px) {
-            padding: 78px 0 43px;
+            margin-top: 72px;
+            padding: 60px 0 48px;
         }
     }
 

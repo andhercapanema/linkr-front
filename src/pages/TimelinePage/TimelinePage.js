@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Ayth";
 import LinkrResources from "../../common/services/LinkrResources";
 import Header from "../../components/Header/Header";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import Post from "./Post";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -76,10 +77,57 @@ function TimelinePage() {
     }
   }
 
+
   useEffect(() => {
     updateTimeline();
     getTrendingHashtags();
   }, [updateTimeline]);
+
+    console.log(posts);
+    return (
+        <>
+            <Header />
+            <StyledTimelinePage>
+                {window.screen.width < 611 && <SearchBar />}
+                <h2>timeline</h2>
+                {userPicture && (
+                    <PostCard>
+                        {window.screen.width >= 611 && (
+                            <img alt="User profile" src={userPicture} />
+                        )}
+                        <PostForm
+                            onSubmit={submitPost}
+                            isLoading={formIsLoading}
+                        >
+                            <h3>What are you going to share today?</h3>
+                            <input
+                                type="url"
+                                placeholder="http:// ..."
+                                name="link"
+                                onChange={handleForm}
+                                value={link}
+                                required
+                                disabled={formIsLoading}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Awesome article about #javascript"
+                                name="description"
+                                onChange={handleForm}
+                                value={description}
+                                disabled={formIsLoading}
+                            />
+                            <div>
+                                {formIsLoading ? (
+                                    <button disabled>Publishing...</button>
+                                ) : (
+                                    <button>Publish</button>
+                                )}
+                            </div>
+                        </PostForm>
+                    </PostCard>
+                )}
+
 
   return (
     <>

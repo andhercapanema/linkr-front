@@ -37,6 +37,9 @@ export const Logout = styled.div`
     display: ${(props) => (props.display === "down" ? "none" : "flex")};
     justify-content: flex-end;
     background-color: ${COLORS.base};
+    margin-left: auto;
+    margin-right: 0;
+
     button {
         width: 150px;
         height: 47px;
@@ -56,4 +59,14 @@ export const Logout = styled.div`
         letter-spacing: 0.05em;
         color: #ffffff;
     }
+`;
+
+export const StyledHeader = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: ${COLORS.base};
+
+    position: fixed;
+    z-index: 1;
 `;
