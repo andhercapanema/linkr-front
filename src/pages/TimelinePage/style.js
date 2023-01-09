@@ -301,3 +301,49 @@ export const StyledLinkSnippet = styled.a`
         border-radius: 0px 11px 11px 0px;
     }
 `;
+
+export const Title = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top: 60px;
+    img {
+        margin-right: 18px;
+    }
+    h1 {
+        font-family: Oswald;
+        font-size: 43px;
+        font-weight: 700;
+        line-height: 64px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+`;
+
+export const Data = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+export const Username = styled.div`
+    h1 {
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 20px;
+    }
+`;
+
+export const PostInfo = styled.div`
+    margin-top: 5px;
+
+    h1 {
+        font-size: 15px;
+        line-height: 18px;
+        color: ${COLORS.text3};
+        margin-bottom: 13px;
+
+        @media (min-width: 611px) {
+            font-size: 17px;
+            line-height: 20px;
+        }
+    }
+`;

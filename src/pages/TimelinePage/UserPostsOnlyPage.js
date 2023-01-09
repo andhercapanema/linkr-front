@@ -1,10 +1,8 @@
-import styled from "styled-components";
 import { AuthContext } from "../../Ayth";
 import { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import axios from "axios";
-import { StyledPost, LikesColumn, StyledLinkSnippet, StyledTimelinePage, PostsList } from "./style";
-import COLORS from "../../common/constants/colors";
+import { StyledPost, LikesColumn, StyledLinkSnippet, StyledTimelinePage, PostsList, Title, Data, Username, PostInfo } from "./style";
 import LinkSnippet from "./LinkSnippet";
 import SearchBar from "../../components/SearchBar/SearchBar";
 
@@ -46,7 +44,7 @@ export default function UserPostsOnly() {
                                 <ion-icon name="heart-outline"></ion-icon>
                                 <p>{u.likesAmount} likes</p>
                             </LikesColumn>
-                            <Teste>
+                            <Data>
                                 <Username>
                                     <h1>{user.username}</h1>
                                 </Username>
@@ -74,7 +72,7 @@ export default function UserPostsOnly() {
                                     metadata={u.metadata}
                                     id={u.id}
                                 /> */}
-                            </Teste>
+                            </Data>
                         </StyledPost>
                     ))}
                 </PostsList>
@@ -82,49 +80,3 @@ export default function UserPostsOnly() {
         </>
     );
 }
-
-const Title = styled.div`
-    display: flex;
-    align-items: center;
-    margin-top: 60px;
-    img {
-        margin-right: 18px;
-    }
-    h1 {
-        font-family: Oswald;
-        font-size: 43px;
-        font-weight: 700;
-        line-height: 64px;
-        letter-spacing: 0em;
-        text-align: left;
-    }
-`;
-
-const Teste = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-const Username = styled.div`
-    h1 {
-        font-weight: 400;
-        font-size: 17px;
-        line-height: 20px;
-    }
-`;
-
-const PostInfo = styled.div`
-    margin-top: 5px;
-
-    h1 {
-        font-size: 15px;
-        line-height: 18px;
-        color: ${COLORS.text3};
-        margin-bottom: 13px;
-
-        @media (min-width: 611px) {
-            font-size: 17px;
-            line-height: 20px;
-        }
-    }
-`;
