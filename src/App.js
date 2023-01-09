@@ -5,6 +5,7 @@ import SignupPage from "./pages/Authentication&Logout/SignupPage";
 import TimelinePage from "./pages/TimelinePage/TimelinePage";
 import AuthProvider from "./Ayth";
 import UserPostsOnly from "./pages/TimelinePage/UserPostsOnlyPage";
+import UserId from "./pages/TimelinePage/UserIdPage";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                     <Route path="/signup" element={<SignupPage />}></Route>
                     <Route path="/timeline" element={<TimelinePage />} />
                     <Route path="/userPosts" element={< UserPostsOnly />} />
+                    <Route path="/user/:id" element={< UserId />} />
                 </Routes>
             </AuthProvider>
         </BrowserRouter>

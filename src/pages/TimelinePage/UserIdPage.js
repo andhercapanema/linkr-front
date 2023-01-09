@@ -7,16 +7,19 @@ import { StyledPost, LikesColumn, StyledLinkSnippet, StyledTimelinePage, PostsLi
 import COLORS from "../../common/constants/colors";
 import LinkSnippet from "./LinkSnippet";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import { useParams } from "react-router-dom";
 
-export default function UserPostsOnly() {
+export default function UserId() {
     const { user } = useContext(AuthContext);
     const [data, setData] = useState([]);
 
-    const id = user.id;
+    const { id } = useParams();
+    console.log("id", id);
+    console.log("data", data);
 
     useEffect(() => {
         axios
-            .get(`http://localhost:4000/search/${id}`)
+            .get(`http://localhost:4000/user/${id}`)
             .then((res) => {
                 console.log("res", res.data);
                 setData(res.data);
@@ -32,8 +35,8 @@ export default function UserPostsOnly() {
             <StyledTimelinePage>
                 {window.screen.width < 611 && <SearchBar />}
                 <Title>
-                    <img alt="User profile" src={user.picture_url} />
-                    <h1>{user.username}'s posts</h1>
+                    <img alt="User profile" src={data[0].picture_url} />
+                    <h1>{data[0].username}'s posts</h1>
                 </Title>
                 <PostsList>
                     {data.map((u) => (
@@ -41,7 +44,7 @@ export default function UserPostsOnly() {
                             <LikesColumn>
                                 <img
                                     alt="User profile"
-                                    src={user.picture_url}
+                                    src={u.picture_url}
                                 />
                                 <ion-icon name="heart-outline"></ion-icon>
                                 <p>{u.likesAmount} likes</p>
