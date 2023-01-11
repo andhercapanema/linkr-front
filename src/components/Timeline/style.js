@@ -201,7 +201,7 @@ export const UsernameEditDelete = styled.div`
     justify-content: space-between;
     margin-bottom: 7px;
 
-    h4 {
+    && h4 {
         margin-top: 0;
         font-weight: 400;
         text-align: start;

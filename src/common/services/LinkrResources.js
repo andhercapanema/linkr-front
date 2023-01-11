@@ -16,6 +16,9 @@ const LinkrResources = {
     editPostDescription: (id, body, token) =>
         api.patch(`/posts/${id}`, body, headers(token)),
     deletePost: (id, token) => api.delete(`/posts/${id}`, headers(token)),
+    followUser: (body, token) => api.post("/follows", body, headers(token)),
+    unfollowUser: (id, token) => api.delete(`/follows/${id}`, headers(token)),
+    getFollow: (id, token) => api.get(`/follows/${id}`, headers(token)),
 };
 
 export default LinkrResources;

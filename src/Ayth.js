@@ -9,9 +9,19 @@ export default function AuthProvider({ children }) {
     const [user, setUser] = useState([]);
 
     return (
-        <AuthContext.Provider value={{ username, setUsername, picture, setPicture, token, setToken, user, setUser}}>
+        <AuthContext.Provider
+            value={{
+                username,
+                setUsername,
+                picture,
+                setPicture,
+                token,
+                setToken,
+                user,
+                setUser,
+            }}
+        >
             {children}
         </AuthContext.Provider>
-    )
-
+    );
 }

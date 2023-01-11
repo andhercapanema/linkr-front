@@ -16,9 +16,7 @@ function Timeline({ posts, updatePosts }) {
     const [completedPosts, setCompletedPosts] = useState([...posts]);
 
     const [deletionIsLoading, setDeletionIsLoading] = useState(false);
-    const [deleteModal, setDeleteModal] = useState(
-        posts.map(({ id }) => ({ id, isOpen: false }))
-    );
+    const [deleteModal, setDeleteModal] = useState([]);
 
     // const [hashtags, setHashtags] = useState([]);
 
@@ -65,12 +63,7 @@ function Timeline({ posts, updatePosts }) {
             setForm({ link: "", description: "" });
             setFormIsLoading(false);
 
-            setDeleteModal(
-                deleteModal.map((postModal) => ({
-                    ...postModal,
-                    isOpen: false,
-                }))
-            );
+            setDeleteModal(posts.map(({ id }) => ({ id, isOpen: false })));
             setDeletionIsLoading(false);
         } catch (err) {
             alert(
@@ -153,15 +146,17 @@ function Timeline({ posts, updatePosts }) {
                                         (postModal) => postModal.id === post.id
                                     )[0]?.isOpen
                                 }
-                                setDeleteModalIsOpen={(bool) =>
+                                setDeleteModalIsOpen={(bool) => {
+                                    console.log(bool);
+                                    console.log(deleteModal);
                                     setDeleteModal(
                                         deleteModal.map((postModal) =>
                                             postModal.id === post.id
                                                 ? { ...postModal, isOpen: bool }
                                                 : postModal
                                         )
-                                    )
-                                }
+                                    );
+                                }}
                             />
                         ))
                     )}

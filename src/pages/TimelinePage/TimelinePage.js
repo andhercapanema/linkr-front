@@ -4,7 +4,7 @@ import LinkrResources from "../../common/services/LinkrResources";
 import Header from "../../components/Header/Header";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Timeline from "../../components/Timeline/Timeline";
-import { StyledTimelinePage } from "./style";
+import { PageTitle, StyledTimelinePage } from "./style";
 
 function TimelinePage() {
     const [posts, setPosts] = useState([]);
@@ -32,7 +32,9 @@ function TimelinePage() {
             <Header />
             <StyledTimelinePage>
                 {window.screen.width < 611 && <SearchBar />}
-                <h2>timeline</h2>
+                <PageTitle>
+                    <h2>timeline</h2>
+                </PageTitle>
                 <Timeline posts={posts} updatePosts={updatePosts} />
             </StyledTimelinePage>
         </>
