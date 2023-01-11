@@ -2,9 +2,13 @@ import { AuthContext } from "../../Ayth";
 import { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import axios from "axios";
-import { StyledPost, LikesColumn, StyledLinkSnippet, StyledTimelinePage, PostsList, Title, Data, Username, PostInfo } from "./style";
-import LinkSnippet from "./LinkSnippet";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import { Data, PostInfo, StyledTimelinePage, Title, Username } from "./style";
+import {
+    LikesColumn,
+    PostsList,
+    StyledPost,
+} from "../../components/Timeline/style";
 
 export default function UserPostsOnly() {
     const { user } = useContext(AuthContext);

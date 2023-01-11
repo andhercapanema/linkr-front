@@ -1,25 +1,34 @@
-import Post from "./Post";
+import Post from "../../components/Timeline/Post";
 import Header from "../../components/Header/Header";
-import { PostsList, StyledTimelinePage } from "./style";
 import { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import COLORS from "../../common/constants/colors";
-import styled from "styled-components"
+import styled from "styled-components";
 import LinkrResources from "../../common/services/LinkrResources";
-
+import { StyledTimelinePage } from "./style";
+import { PostsList } from "../../components/Timeline/style";
 
 function HashtagPage() {
-    const { hashtag } = useParams()
+    const { hashtag } = useParams();
     const [postsAreLoading, setPostsAreLoading] = useState(true);
     const userToken = "banana";
     const [posts, setPosts] = useState([]);
-    const [hashtags, setHashtags] = useState([])
-    const testArray = ["#javascript","#react","#react-native","#material","#web-dev","#mobile","#css","#html","#node","#sql"]
-    
+    const [hashtags, setHashtags] = useState([]);
+    const testArray = [
+        "#javascript",
+        "#react",
+        "#react-native",
+        "#material",
+        "#web-dev",
+        "#mobile",
+        "#css",
+        "#html",
+        "#node",
+        "#sql",
+    ];
 
-
-    const updateTimeline = useCallback(async () => {
+    const updatePosts = useCallback(async () => {
         try {
             const res = await LinkrResources.getHastagPosts(hashtag, userToken);
             const updatedPosts = res.data;
@@ -38,7 +47,6 @@ function HashtagPage() {
                 post.metadata = metadata.data;
             }
 
-
             setPosts(updatedPosts);
             setPostsAreLoading(false);
         } catch (err) {
@@ -46,69 +54,76 @@ function HashtagPage() {
         }
     }, []);
 
-    async function getTrendingHashtags(){
+    async function getTrendingHashtags() {
         try {
-            const res = await LinkrResources.getTrendingHashtags(userToken)
-            setHashtags(res.data)
+            const res = await LinkrResources.getTrendingHashtags(userToken);
+            setHashtags(res.data);
         } catch (error) {
-            console.log(error.response)
-            alert(error.message)
+            console.log(error.response);
+            alert(error.message);
         }
     }
 
-
     useEffect(() => {
-        updateTimeline();
+        updatePosts();
         getTrendingHashtags();
-    }, [updateTimeline]);
+    }, [updatePosts]);
 
     return (
         <>
-        <Header/>
-        <StyledTimelinePage>
-            <h2>#{hashtag}</h2>
-            {postsAreLoading ? (
-                <h4>Loading...</h4>
-            ) : (
-               <DividedScreen> 
-                <PostsList>
-                    {posts.length === 0 ? (
-                        <h4>There are no posts yet</h4>
-                    ) : (
-                        posts.map((post) => <Post key={post.id} post={post} />)
-                    )}
-                </PostsList>
-                <HashtagsList>
-                    <h3>trending</h3>
-                    <ElementsOfArray>
-                        {hashtags.map(hash => <p><Link to={`/hashtag/${hash}`}>{hash}</Link></p>)}
-                    </ElementsOfArray>    
-                </HashtagsList>
-                </DividedScreen>
-            )}
-        </StyledTimelinePage>
+            <Header />
+            <StyledTimelinePage>
+                <h2>#{hashtag}</h2>
+                {postsAreLoading ? (
+                    <h4>Loading...</h4>
+                ) : (
+                    <DividedScreen>
+                        <PostsList>
+                            {posts.length === 0 ? (
+                                <h4>There are no posts yet</h4>
+                            ) : (
+                                posts.map((post) => (
+                                    <Post key={post.id} post={post} />
+                                ))
+                            )}
+                        </PostsList>
+                        <HashtagsList>
+                            <h3>trending</h3>
+                            <ElementsOfArray>
+                                {hashtags.map((hash) => (
+                                    <p>
+                                        <Link to={`/hashtag/${hash}`}>
+                                            {hash}
+                                        </Link>
+                                    </p>
+                                ))}
+                            </ElementsOfArray>
+                        </HashtagsList>
+                    </DividedScreen>
+                )}
+            </StyledTimelinePage>
         </>
     );
 }
 
-const DividedScreen = styled.div`
-    display:flex;
-`
-const HashtagsList = styled.div`
+export const DividedScreen = styled.div`
+    display: flex;
+`;
+export const HashtagsList = styled.div`
     width: 301px;
     height: 406px;
     border-radius: 16px;
     background-color: #171717;
     font-family: "Lato";
     padding-top: 9px;
-    
-    h3{
+
+    h3 {
         font-size: 27px;
         padding-bottom: 9px;
         margin-left: 16px;
     }
-`
-const ElementsOfArray = styled.div`
+`;
+export const ElementsOfArray = styled.div`
     display: flex;
     text-align: left;
     justify-content: space-around;
@@ -117,6 +132,6 @@ const ElementsOfArray = styled.div`
     font-size: 19px;
     height: 90%;
     margin-left: 16px;
-`
+`;
 
 export default HashtagPage;

@@ -2,9 +2,19 @@ import { AuthContext } from "../../Ayth";
 import { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import axios from "axios";
-import { StyledPost, LikesColumn, StyledLinkSnippet, StyledTimelinePage, PostsList, Title, Data, Username, PostInfo } from "./style";
+import {
+    StyledPost,
+    LikesColumn,
+    StyledLinkSnippet,
+    StyledTimelinePage,
+    PostsList,
+    Title,
+    Data,
+    Username,
+    PostInfo,
+} from "./style";
 import COLORS from "../../common/constants/colors";
-import LinkSnippet from "./LinkSnippet";
+import LinkSnippet from "../../components/Timeline/LinkSnippet";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { useParams } from "react-router-dom";
 
