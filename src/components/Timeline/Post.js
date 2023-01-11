@@ -96,7 +96,7 @@ function Post({
             }
         } catch (error) {
             alert(error.response);
-            console.log(error.message);
+            console.error(error.message);
         }
     }
 
@@ -112,7 +112,6 @@ function Post({
             });
     }, [isEditing, description]);
 
-    console.log("deleteModalIsOpen: ", deleteModalIsOpen);
     return (
         <StyledPost>
             <LikesColumn>

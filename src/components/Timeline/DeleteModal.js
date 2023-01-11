@@ -18,10 +18,8 @@ function DeleteModal({
 
     async function deletePost() {
         setDeletionIsLoading(true);
-        console.log("postId", postId);
 
         try {
-            console.log("postId", postId);
             await LinkrResources.deletePost(postId, token);
             await updatePosts();
         } catch (err) {
@@ -34,7 +32,6 @@ function DeleteModal({
         }
     }
 
-    console.log("id: ", postId);
     return (
         <ReactModal
             isOpen={deleteModalIsOpen}
