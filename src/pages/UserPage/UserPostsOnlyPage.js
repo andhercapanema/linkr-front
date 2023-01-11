@@ -3,7 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import axios from "axios";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { Data, PostInfo, StyledTimelinePage, Title, Username } from "./style";
+import {
+    Data,
+    PostInfo,
+    StyledTimelinePage,
+    Title,
+    Username,
+} from "../TimelinePage/style";
 import {
     LikesColumn,
     PostsList,

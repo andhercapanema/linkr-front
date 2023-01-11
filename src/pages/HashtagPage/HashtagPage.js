@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import COLORS from "../../common/constants/colors";
 import styled from "styled-components";
 import LinkrResources from "../../common/services/LinkrResources";
-import { StyledTimelinePage } from "./style";
+import { StyledTimelinePage } from "../TimelinePage/style";
 import { PostsList } from "../../components/Timeline/style";
 
 function HashtagPage() {
