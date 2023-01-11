@@ -43,7 +43,8 @@ function Timeline({ posts, updatePosts }) {
     }
 
     const getUserDataAndUrlMetadata = useCallback(async () => {
-        console.log("getUserDataAndUrlMetadata()");
+        if (posts.length === 0) return;
+
         try {
             const completedPostData = [...posts];
 
@@ -94,7 +95,7 @@ function Timeline({ posts, updatePosts }) {
         // getTrendingHashtags();
     }, [getUserDataAndUrlMetadata /* , getTrendingHashtags */]);
 
-    console.log("deleteModal: ", deleteModal);
+    console.log("posts: ", posts);
     return (
         <>
             {userPicture && (

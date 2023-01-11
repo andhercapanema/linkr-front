@@ -11,7 +11,6 @@ function TimelinePage() {
     const { token } = useContext(AuthContext);
 
     const updatePosts = useCallback(async () => {
-        console.log("updatePosts()");
         try {
             // modificar aqui para popular a variável updatedPosts com os posts do banco
             const res = await LinkrResources.getLastPosts(token);
@@ -34,9 +33,7 @@ function TimelinePage() {
             <StyledTimelinePage>
                 {window.screen.width < 611 && <SearchBar />}
                 <h2>timeline</h2>
-                {posts.length !== 0 && (
-                    <Timeline posts={posts} updatePosts={updatePosts} />
-                )}
+                <Timeline posts={posts} updatePosts={updatePosts} />
             </StyledTimelinePage>
         </>
     );
