@@ -1,7 +1,7 @@
 import React from "react";
 import { StyledLinkSnippet } from "./style";
 
-function LinkSnippet({ metadata, id }) {
+function LinkSnippet({ metadata }) {
     const { description, image, title, url } = metadata;
 
     return (

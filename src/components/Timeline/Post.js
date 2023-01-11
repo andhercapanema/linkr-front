@@ -3,15 +3,23 @@ import { useNavigate } from "react-router";
 import LinkrResources from "../../common/services/LinkrResources";
 import DeleteModal from "./DeleteModal";
 import LinkSnippet from "./LinkSnippet";
+import { ReactTagify } from "react-tagify";
+import { AuthContext } from "../../Ayth";
 import {
     LikesColumn,
     PostInfos,
     StyledPost,
     UsernameEditDelete,
 } from "./style";
-import { AuthContext } from "../../Ayth";
 
-function Post({ post, updateTimeline }) {
+function Post({
+    post,
+    updatePosts,
+    deletionIsLoading,
+    setDeletionIsLoading,
+    deleteModalIsOpen,
+    setDeleteModalIsOpen,
+}) {
     const {
         id,
         description: dbDescription,
@@ -19,9 +27,16 @@ function Post({ post, updateTimeline }) {
         user,
         metadata,
     } = post;
-    const { username: loggedUsername, token } = useContext(AuthContext);
+    const {
+        username: loggedUsername,
+        token,
+        setUser,
+    } = useContext(AuthContext);
 
-    const postAuthorIsLoggedUser = loggedUsername === user.username;
+    const postAuthorIsLoggedUser = loggedUsername === user?.username;
+
+    const [numberLikes, setNumberLikes] = useState();
+    const [isLiked, setIsLiked] = useState(likesAmount);
 
     const [isEditing, setIsEditing] = useState(false);
     const [editedDescription, setEditedDescription] = useState(dbDescription);
@@ -29,33 +44,25 @@ function Post({ post, updateTimeline }) {
     const inputRef = useRef(null);
     const [editionIsLoading, setEditionIsLoading] = useState(false);
 
-    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
-
-    const { setUser } = useContext(AuthContext);
-
-    const navigate = useNavigate();
+    const tagStyle = {
+        fontWeight: 700,
+        cursor: "pointer",
+    };
 
     function editPost() {
         if (isEditing) setEditedDescription(description);
         setIsEditing((prev) => !prev);
     }
 
-    function redirectToUserPage() {
-        setUser(user);
-        navigate("/userPosts");
-    }
-
     async function saveChanges(e) {
         e.preventDefault();
         setEditionIsLoading(true);
-
         try {
             await LinkrResources.editPostDescription(
                 id,
                 { description: editedDescription },
                 token
             );
-
             setEditionIsLoading(false);
             setDescription(editedDescription);
             setIsEditing(false);
@@ -65,6 +72,31 @@ function Post({ post, updateTimeline }) {
             );
             console.error(err.response);
             setEditionIsLoading(false);
+        }
+    }
+
+    const navigate = useNavigate();
+
+    function redirectToUserPage() {
+        setUser(user);
+        navigate("/userPosts");
+    }
+
+    async function toggleLikePost(props) {
+        const body = { type: props, id };
+        try {
+            await LinkrResources.toggleLike(body, token);
+            setIsLiked(!isLiked);
+            if (props === "add") {
+                setNumberLikes(() => numberLikes + 1);
+            }
+
+            if (props === "remove") {
+                setNumberLikes(() => numberLikes - 1);
+            }
+        } catch (error) {
+            alert(error.response);
+            console.log(error.message);
         }
     }
 
@@ -80,20 +112,36 @@ function Post({ post, updateTimeline }) {
             });
     }, [isEditing, description]);
 
+    console.log("deleteModalIsOpen: ", deleteModalIsOpen);
     return (
         <StyledPost>
             <LikesColumn>
                 <img
                     alt="User profile"
-                    src={user.picture_url}
+                    src={user?.picture_url}
                     onClick={redirectToUserPage}
                 />
-                <ion-icon name="heart-outline"></ion-icon>
-                <p>{likesAmount} likes</p>
+                {isLiked ? (
+                    <ion-icon
+                        onClick={() => toggleLikePost("add")}
+                        className="red"
+                        name="heart-outline"
+                        data-tooltip-content={`Você, e mais ${
+                            numberLikes - 1
+                        } curtiram esse post.`}
+                    ></ion-icon>
+                ) : (
+                    <ion-icon
+                        onClick={() => toggleLikePost("remove")}
+                        name="heart-outline"
+                        data-tooltip-content={`Curtido por ${numberLikes} pessoas.`}
+                    ></ion-icon>
+                )}
+                <p>{numberLikes} likes</p>
             </LikesColumn>
             <PostInfos>
                 <UsernameEditDelete>
-                    <h4>{user.username}</h4>
+                    <h4>{user?.username}</h4>
                     {postAuthorIsLoggedUser && (
                         <div>
                             <ion-icon
@@ -107,8 +155,10 @@ function Post({ post, updateTimeline }) {
                             <DeleteModal
                                 deleteModalIsOpen={deleteModalIsOpen}
                                 setDeleteModalIsOpen={setDeleteModalIsOpen}
-                                postId={post.id}
-                                updateTimeline={updateTimeline}
+                                postId={id}
+                                updatePosts={updatePosts}
+                                deletionIsLoading={deletionIsLoading}
+                                setDeletionIsLoading={setDeletionIsLoading}
                             />
                         </div>
                     )}
@@ -125,9 +175,10 @@ function Post({ post, updateTimeline }) {
                         />
                     </form>
                 ) : (
-                    <p>{description}</p>
+                    <ReactTagify tagStyle={tagStyle}>
+                        <p>{description}</p>
+                    </ReactTagify>
                 )}
-
                 <LinkSnippet metadata={metadata} id={id} />
             </PostInfos>
         </StyledPost>

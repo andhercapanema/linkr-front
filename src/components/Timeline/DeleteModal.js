@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import ReactModal from "react-modal";
 import { AuthContext } from "../../Ayth";
 import LinkrResources from "../../common/services/LinkrResources";
@@ -8,21 +8,22 @@ function DeleteModal({
     deleteModalIsOpen,
     setDeleteModalIsOpen,
     postId,
-    updateTimeline,
+    updatePosts,
+    deletionIsLoading,
+    setDeletionIsLoading,
 }) {
     ReactModal.setAppElement("#root");
 
-    const [deletionIsLoading, setDeletionIsLoading] = useState(false);
     const { token } = useContext(AuthContext);
 
     async function deletePost() {
         setDeletionIsLoading(true);
+        console.log("postId", postId);
 
         try {
+            console.log("postId", postId);
             await LinkrResources.deletePost(postId, token);
-            await updateTimeline();
-            setDeleteModalIsOpen(false);
-            setDeletionIsLoading(false);
+            await updatePosts();
         } catch (err) {
             setDeleteModalIsOpen(false);
             setDeletionIsLoading(false);
@@ -33,6 +34,7 @@ function DeleteModal({
         }
     }
 
+    console.log("id: ", postId);
     return (
         <ReactModal
             isOpen={deleteModalIsOpen}
