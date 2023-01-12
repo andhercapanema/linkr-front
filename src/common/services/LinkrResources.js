@@ -11,7 +11,7 @@ const LinkrResources = {
     getLastPosts: (token) => api.get("/posts", headers(token)),
     getLinkMetadata: (id, token) =>
         api.get(`/posts/metadata/${id}`, headers(token)),
-    getAllUsers: (token) => api.get("/users", headers(token)),
+    getUsersByFollowing: (token) => api.get("/users/follows", headers(token)),
     getUser: (id, token) => api.get(`/users/${id}`, headers(token)),
     editPostDescription: (id, body, token) =>
         api.patch(`/posts/${id}`, body, headers(token)),

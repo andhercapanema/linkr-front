@@ -12,7 +12,7 @@ function SearchBar() {
 
     const updateUsers = useCallback(async () => {
         try {
-            const { data } = await LinkrResources.getAllUsers(token);
+            const { data } = await LinkrResources.getUsersByFollowing(token);
             setUsers(data);
         } catch (err) {
             alert(
@@ -42,14 +42,17 @@ function SearchBar() {
             <ion-icon name="search-outline"></ion-icon>
             {filteredUsers.length !== 0 && (
                 <SearchResultList>
-                    {filteredUsers.map(({ id, picture_url, username }) => (
-                        <Link to={`/user/${id}`} key={id}>
-                            <li>
-                                <img alt="User profile" src={picture_url} />
-                                <p>{username}</p>
-                            </li>
-                        </Link>
-                    ))}
+                    {filteredUsers.map(
+                        ({ id, picture_url, username, isFollowing }) => (
+                            <Link to={`/user/${id}`} key={id}>
+                                <li>
+                                    <img alt="User profile" src={picture_url} />
+                                    <p>{username}</p>
+                                    {isFollowing && <span>• following</span>}
+                                </li>
+                            </Link>
+                        )
+                    )}
                 </SearchResultList>
             )}
         </StyledSearchBar>

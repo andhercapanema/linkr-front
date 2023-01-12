@@ -82,5 +82,12 @@ export const SearchResultList = styled.ul`
             line-height: 23px;
             color: #515151;
         }
+
+        span {
+            margin-left: 7px;
+            font-size: 19px;
+            line-height: 23px;
+            color: #c5c5c5;
+        }
     }
 `;

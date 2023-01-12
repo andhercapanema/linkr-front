@@ -88,7 +88,6 @@ function Timeline({ posts, updatePosts }) {
         // getTrendingHashtags();
     }, [getUserDataAndUrlMetadata /* , getTrendingHashtags */]);
 
-    console.log("posts: ", posts);
     return (
         <>
             {userPicture && (
@@ -146,17 +145,15 @@ function Timeline({ posts, updatePosts }) {
                                         (postModal) => postModal.id === post.id
                                     )[0]?.isOpen
                                 }
-                                setDeleteModalIsOpen={(bool) => {
-                                    console.log(bool);
-                                    console.log(deleteModal);
+                                setDeleteModalIsOpen={(bool) =>
                                     setDeleteModal(
                                         deleteModal.map((postModal) =>
                                             postModal.id === post.id
                                                 ? { ...postModal, isOpen: bool }
                                                 : postModal
                                         )
-                                    );
-                                }}
+                                    )
+                                }
                             />
                         ))
                     )}
