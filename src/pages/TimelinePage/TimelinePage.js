@@ -13,7 +13,7 @@ function TimelinePage() {
     const updatePosts = useCallback(async () => {
         try {
             // modificar aqui para popular a variável updatedPosts com os posts do banco
-            const res = await LinkrResources.getLastPosts(token);
+            const res = await LinkrResources.getPostsFromFollowingUsers(token);
             setPosts(res.data);
         } catch (err) {
             alert(

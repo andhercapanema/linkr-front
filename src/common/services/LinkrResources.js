@@ -19,6 +19,10 @@ const LinkrResources = {
     followUser: (body, token) => api.post("/follows", body, headers(token)),
     unfollowUser: (id, token) => api.delete(`/follows/${id}`, headers(token)),
     getFollow: (id, token) => api.get(`/follows/${id}`, headers(token)),
+    getPostsFromFollowingUsers: (token) =>
+        api.get("/posts/follows", headers(token)),
+    getFollowingUsersOnly: (token) =>
+        api.get("/users/following", headers(token)),
 };
 
 export default LinkrResources;

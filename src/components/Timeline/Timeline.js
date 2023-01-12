@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useMatch } from "react-router-dom";
 import { AuthContext } from "../../Ayth";
 import LinkrResources from "../../common/services/LinkrResources";
 import Post from "./Post";
@@ -22,6 +23,9 @@ function Timeline({ posts, updatePosts }) {
 
     const { picture: userPicture, token } = useContext(AuthContext);
 
+    const isInTimelinePage = useMatch("/timeline");
+    const [followsSomeone, setFollowsSomeone] = useState(true);
+
     function handleForm(e) {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
@@ -41,7 +45,35 @@ function Timeline({ posts, updatePosts }) {
     }
 
     const getUserDataAndUrlMetadata = useCallback(async () => {
-        if (posts.length === 0) return;
+        if (posts.length === 0) {
+            if (isInTimelinePage) {
+                try {
+                    const following =
+                        await LinkrResources.getFollowingUsersOnly(token);
+                    if (following.data.length === 0) {
+                        setFollowsSomeone(false);
+                        setPostsAreLoading(false);
+                    }
+
+                    const res = await LinkrResources.getPostsFromFollowingUsers(
+                        token
+                    );
+                    if (res.data.length === 0) {
+                        setPostsAreLoading(false);
+                    }
+
+                    setForm({ link: "", description: "" });
+                    setFormIsLoading(false);
+                } catch (err) {
+                    alert(
+                        "An error occured while trying to check if you follow someone, please refresh the page"
+                    );
+                    console.error(err.response);
+                }
+            }
+
+            return;
+        }
 
         try {
             const completedPostData = [...posts];
@@ -71,7 +103,7 @@ function Timeline({ posts, updatePosts }) {
             );
             console.error(err.response);
         }
-    }, [posts, token]);
+    }, [posts, token, isInTimelinePage]);
 
     /* const getTrendingHashtags = useCallback(async () => {
         try {
@@ -130,8 +162,19 @@ function Timeline({ posts, updatePosts }) {
             ) : (
                 // <DividedScreen>
                 <PostsList>
-                    {!postsAreLoading && completedPosts.length === 0 ? (
-                        <h4>There are no posts yet</h4>
+                    {completedPosts.length === 0 ? (
+                        isInTimelinePage ? (
+                            followsSomeone ? (
+                                <h4>No posts found from your friends</h4>
+                            ) : (
+                                <h4>
+                                    You don't follow anyone yet. Search for new
+                                    friends!
+                                </h4>
+                            )
+                        ) : (
+                            <h4>There are no posts yet</h4>
+                        )
                     ) : (
                         completedPosts.map((post) => (
                             <Post
@@ -149,7 +192,10 @@ function Timeline({ posts, updatePosts }) {
                                     setDeleteModal(
                                         deleteModal.map((postModal) =>
                                             postModal.id === post.id
-                                                ? { ...postModal, isOpen: bool }
+                                                ? {
+                                                      ...postModal,
+                                                      isOpen: bool,
+                                                  }
                                                 : postModal
                                         )
                                     )

@@ -91,6 +91,10 @@ export const PostForm = styled.form`
             font-weight: 700;
             font-size: 13px;
             line-height: 16px;
+
+            @media (min-width: 611px) {
+                min-height: 31px;
+            }
         }
     }
 `;
