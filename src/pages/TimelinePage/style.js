@@ -10,28 +10,34 @@ export const StyledTimelinePage = styled.main`
     align-items: center;
     padding: 0 calc((100vw - 611px) / 2);
 
-    h2 {
-        font-family: "Oswald";
-        font-weight: 700;
-        font-size: 33px;
-        line-height: 49px;
-        width: 100%;
-        max-width: 611px;
-
-        padding: 19px 0 19px 17px;
-
-        @media (min-width: 611px) {
-            margin-top: 72px;
-            padding: 60px 0 48px;
-        }
-    }
-
     h4 {
         font-family: "Lato";
         text-align: center;
         font-weight: 500;
         font-size: 25px;
         margin-top: 15px;
+    }
+`;
+
+export const PageTitle = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    padding: 19px 0 19px 17px;
+    max-width: 611px;
+
+    @media (min-width: 611px) {
+        margin-top: 72px;
+        padding: 60px 0 48px;
+    }
+
+    h2 {
+        font-family: "Oswald";
+        font-weight: 700;
+        font-size: 33px;
+        line-height: 49px;
     }
 `;
 
