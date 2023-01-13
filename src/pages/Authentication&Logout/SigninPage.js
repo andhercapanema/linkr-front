@@ -1,12 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState, useContext } from "react";
-import { All, Left, Right, Input, Button, Siginup } from "./StyleAuthentication";
+import {
+    All,
+    Left,
+    Right,
+    Input,
+    Button,
+    Siginup,
+} from "./StyleAuthentication";
 import { AuthContext } from "../../Ayth";
 
-
 export default function SigninPage() {
-
     const [emailSignin, setEmailSignin] = useState("");
     const [passwordSigin, setPasswordSigin] = useState("");
     const [disable, setDisable] = useState(false);
@@ -19,12 +24,12 @@ export default function SigninPage() {
 
         setDisable(true);
 
-        const URL = "http://localhost:4000/signin"; //inserir url
+        const URL = "https://linkr-api-dj08.onrender.com/signin"; //inserir url
 
         const body = {
             email: emailSignin,
-            password: passwordSigin
-        }
+            password: passwordSigin,
+        };
 
         const promise = axios.post(URL, body);
 
@@ -33,19 +38,17 @@ export default function SigninPage() {
             setPicture(res.data[1].picture_url);
             setUsername(res.data[1].username);
             navigate("/timeline");
-        })
+        });
 
         promise.catch((err) => {
             console.log("err signin", err.response.data);
             alert(err.response.data);
             setDisable(false);
-        })
+        });
     }
 
     return (
-
         <All>
-
             <Left>
                 <h1>linkr</h1>
                 <h2>save, share and discover the best links on the web</h2>
@@ -53,7 +56,6 @@ export default function SigninPage() {
 
             <Right>
                 <form onSubmit={login}>
-
                     <Input>
                         <input
                             type="email"
@@ -77,14 +79,10 @@ export default function SigninPage() {
                     </Input>
 
                     <Button>
-                        <button
-                            type="submit"
-                            disabled={disable}
-                        >
+                        <button type="submit" disabled={disable}>
                             <h1>Log In</h1>
                         </button>
                     </Button>
-
                 </form>
 
                 <Siginup>
@@ -92,9 +90,7 @@ export default function SigninPage() {
                         <h1>First time? Create an account!</h1>
                     </Link>
                 </Siginup>
-
             </Right>
-
         </All>
-    )
+    );
 }
