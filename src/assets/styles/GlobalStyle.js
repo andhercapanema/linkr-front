@@ -142,6 +142,11 @@ const GlobalStyle = createGlobalStyle`
     img{
         object-fit: cover;
     }
+
+    body {
+        min-height: 100vh;
+        background: #333;
+    }
 `;
 
 export default GlobalStyle;

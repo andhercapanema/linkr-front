@@ -24,7 +24,7 @@ export default function UserPostsOnly() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:4000/search/${id}`)
+            .get(`https://linkr-api-dj08.onrender.com/search/${id}`)
             .then((res) => {
                 console.log("res", res.data);
                 setData(res.data);

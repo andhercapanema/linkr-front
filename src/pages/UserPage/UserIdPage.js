@@ -15,7 +15,7 @@ export default function UserId() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:4000/user/${id}`)
+            .get(`https://linkr-api-dj08.onrender.com/user/${id}`)
             .then((res) => {
                 setData(res.data);
             })
